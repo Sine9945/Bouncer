@@ -1,0 +1,364 @@
+@import "tailwindcss";
+
+/* Dark is the default. Light is opt-in via <html data-theme="light"> (header toggle). */
+:root {
+  color-scheme: dark;
+  --paper: #07070a;
+  --sheet: #101015;
+  --sheet-2: #17171d;
+  --ink: #f4f4f6;
+  --ink-2: #a9a9b4;
+  --ink-3: #85858f;
+  --rule: #222229;
+  --rule-strong: #34343d;
+  --proof: #5fd49a;
+  --proof-bg: #0f2419;
+  --false: #ff8f86;
+  --false-bg: #2a1311;
+  --warn: #f0bd62;
+  --warn-bg: #261d0d;
+  --focus: #a5b4fc;
+  --code-bg: #0b0b10;
+  --diff-add: #0f2a1b;
+  --diff-del: #2e1513;
+
+  /* Atmosphere: the glow behind the hero and the gradient word in the headline. */
+  --glow-a: #a3a3ad;
+  --glow-b: #74747e;
+  --glow-c: #5a5a63;
+  --grad-text: linear-gradient(180deg, #ececf0 0%, #8b8b95 100%);
+  --dot: rgba(255, 255, 255, 0.055);
+  --frame: rgba(255, 255, 255, 0.08);
+  --header-bg: rgba(7, 7, 10, 0.72);
+
+  --v-reproduced: #ff9a5c;
+  --v-needs-human: #f0bd62;
+  --v-not-reproduced: #a9a9b4;
+  --v-needs-info: #93b4ff;
+  --v-duplicate: #c4b0ff;
+  --v-already-fixed: #5fd49a;
+  --v-fabricated: #f4f4f6;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --paper: #f5f5f7;
+  --sheet: #ffffff;
+  --sheet-2: #efeff3;
+  --ink: #0c0c10;
+  --ink-2: #4b4b57;
+  --ink-3: #6b6b77;
+  --rule: #e2e2e8;
+  --rule-strong: #c9c9d2;
+  --proof: #18794a;
+  --proof-bg: #e3f3ea;
+  --false: #b42318;
+  --false-bg: #fbe8e6;
+  --warn: #8f5400;
+  --warn-bg: #fcf1dc;
+  --focus: #4338ca;
+  --code-bg: #f3f3f6;
+  --diff-add: #e2f3e8;
+  --diff-del: #fbe6e4;
+
+  --glow-a: #9d9da8;
+  --glow-b: #c4c4cc;
+  --glow-c: #d2d2d9;
+  --grad-text: linear-gradient(180deg, #8e8e98 0%, #2e2e35 100%);
+  --dot: rgba(12, 12, 16, 0.07);
+  --frame: rgba(12, 12, 16, 0.08);
+  --header-bg: rgba(245, 245, 247, 0.78);
+
+  --v-reproduced: #c2410c;
+  --v-needs-human: #a16207;
+  --v-not-reproduced: #52525e;
+  --v-needs-info: #2f5aa8;
+  --v-duplicate: #6d5a9c;
+  --v-already-fixed: #18794a;
+  --v-fabricated: #0c0c10;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-sheet-2: var(--sheet-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-proof: var(--proof);
+  --color-proof-bg: var(--proof-bg);
+  --color-false: var(--false);
+  --color-false-bg: var(--false-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-code: var(--code-bg);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: color-mix(in oklab, var(--glow-a) 45%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Minimal cursors: a white fill with a black outline reads on both themes. */
+:root {
+  --cursor-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 3.5 19.5 11l-7 1.6-3.4 7z' fill='white' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 4 3, default;
+  --cursor-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15V4a2 2 0 0 1 4 0v5a2 2 0 0 1 4 0v1a2 2 0 0 1 3 1z' fill='white'/%3E%3Cg stroke='black' stroke-width='1.6'%3E%3Cpath d='M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2'/%3E%3Cpath d='M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1'/%3E%3Cpath d='M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10'/%3E%3Cpath d='M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/%3E%3C/g%3E%3C/svg%3E") 8 2, pointer;
+}
+html {
+  cursor: var(--cursor-default);
+}
+a,
+button:not(:disabled),
+summary,
+label:has(input[type="checkbox"]),
+[role="tab"] {
+  cursor: var(--cursor-pointer);
+}
+input,
+textarea,
+code,
+pre {
+  cursor: text;
+}
+
+/* Display type: tight, heavy grotesk for the wordmark, headlines and big figures. */
+.display {
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Backgrounds */
+.dot-field-spot {
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--ink) 55%, transparent) 1.1px, transparent 1.4px),
+    radial-gradient(closest-side, color-mix(in oklab, var(--ink) 6%, transparent), transparent);
+  background-size:
+    22px 22px,
+    520px 520px;
+  background-position:
+    0 0,
+    calc(var(--mx, -999px) - 260px) calc(var(--my, -999px) - 260px);
+  background-repeat: repeat, no-repeat;
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, -999px) var(--my, -999px), black, transparent 70%);
+  mask-image: radial-gradient(240px circle at var(--mx, -999px) var(--my, -999px), black, transparent 70%);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.dot-field[data-active="1"] .dot-field-spot {
+  opacity: 1;
+}
+.dot-grid {
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.hero-glow {
+  background:
+    radial-gradient(60% 55% at 50% 0%, color-mix(in oklab, var(--glow-a) 38%, transparent), transparent 70%),
+    radial-gradient(35% 40% at 18% 30%, color-mix(in oklab, var(--glow-b) 20%, transparent), transparent 70%),
+    radial-gradient(35% 40% at 82% 32%, color-mix(in oklab, var(--glow-c) 18%, transparent), transparent 70%);
+}
+.frame-glow {
+  box-shadow:
+    0 0 0 1px var(--frame),
+    0 30px 80px -20px color-mix(in oklab, var(--glow-a) 45%, transparent),
+    0 0 120px -30px color-mix(in oklab, var(--glow-b) 35%, transparent);
+}
+.panel {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease,
+    transform 120ms ease;
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+.btn-ghost {
+  border: 1px solid var(--rule-strong);
+  background: color-mix(in oklab, var(--sheet) 70%, transparent);
+  color: var(--ink);
+  font-weight: 500;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--sheet-2);
+}
+.btn-quiet {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.btn-quiet:hover:not(:disabled) {
+  background: var(--sheet-2);
+  color: var(--ink);
+}
+
+/* Verdict stamp: the product's signature mark. Tinted with the verdict's own color. */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border: 1.5px solid currentColor;
+  border-radius: 6px;
+  padding: 0.12em 0.5em 0.14em;
+  background: color-mix(in oklab, currentColor 12%, transparent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+.stamp[data-verdict="fabricated"] {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+.stamp-land {
+  animation: stamp-land 280ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@keyframes stamp-land {
+  0% {
+    opacity: 0;
+    transform: scale(1.9) rotate(-9deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+
+.seg-active {
+  animation: seg-pulse 1s ease-in-out infinite;
+}
+@keyframes seg-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+.seg-skipped {
+  background-image: repeating-linear-gradient(-45deg, var(--rule-strong) 0 1.5px, transparent 1.5px 4px);
+}
+
+.live-dot {
+  position: relative;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.35;
+  animation: live-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes live-ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-land,
+  .seg-active,
+  .live-dot::after {
+    animation: none;
+  }
+  * {
+    transition-duration: 0ms !important;
+  }
+}
+
+code,
+pre,
+.font-mono {
+  /* Ligatures would draw `==` and `>=` as symbols, which misrepresents code under review. */
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}

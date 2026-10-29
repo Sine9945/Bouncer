@@ -1,0 +1,22 @@
+{
+  // Runs the Bouncer API with a working sandbox in GitHub Codespaces (or any devcontainer host).
+  // Docker-in-Docker keeps the sandbox's bind mounts on the same filesystem as the API.
+  "name": "Bouncer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "20" }
+  },
+  "hostRequirements": { "cpus": 4 },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [8000, 3000],
+  "portsAttributes": {
+    "8000": { "label": "Bouncer API", "onAutoForward": "silent" },
+    "3000": { "label": "Bouncer web", "onAutoForward": "notify" }
+  },
+  // Codespaces secrets with these names are passed in as environment variables.
+  "secrets": {
+    "NEBIUS_API_KEY": { "description": "Nebius Token Factory key, for live Nemotron calls" },
+    "TAVILY_API_KEY": { "description": "Optional: web search for CVEs and advisories" }
+  }
+}
