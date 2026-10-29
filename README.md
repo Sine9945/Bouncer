@@ -2,9 +2,13 @@
 
 **Bouncer filters the fake bug reports, proves the real ones, and drafts the fix, so an open-source maintainer goes from "report received" to "patch ready to review" without the grunt work.**
 
+[![Watch the 2½-minute demo video: "Fake bug reports? Caught."](assets/demo-thumbnail.png)](https://www.youtube.com/watch?v=h8LfoeDoNwA)
+
+**[▶ Watch the demo video (2:28)](https://www.youtube.com/watch?v=h8LfoeDoNwA)**
+
 ![Bouncer's start page: "Real bugs get in. Fake reports don't." with buttons to run 10 test reports or paste your own](assets/screenshots/01-first-run.png)
 
-Track: **Coding and Agentic Engineering**. Built with **NVIDIA Nemotron 3 (Nano, Super, Ultra) on Nebius Token Factory**, a network-less Docker sandbox, the CVE Program API and Tavily.
+Track: **Best Apps and Agents**. Built with **NVIDIA Nemotron 3 (Nano, Super, Ultra) on Nebius Token Factory**, a network-less Docker sandbox, the CVE Program API and Tavily.
 
 > **Core rule:** every verdict rests on something Bouncer checked or ran, never on an AI opinion. It never auto-closes a report and never auto-merges a fix.
 
