@@ -163,7 +163,7 @@ Today the claim checker (stages 1–3) works on any git repository. Point `data/
 - **Fix quality:** a patch that passes all three checks can still be wrong in ways the tests do not cover. It is a draft for review, never a merge.
 - **Logic and design flaws:** vulnerabilities with no crash (for example, an authorization mistake) are hard to verify automatically. Bouncer can ground the claims, but not prove them.
 - **Duplicate detection** relies on search and the model's comparison, and can miss rewritten duplicates.
-- **Cost:** every reproduction uses paid CPU compute on Nebius. The hosted demo has a daily cap.
+- **Cost:** every reproduction uses CPU compute for the sandbox, and model spending is capped by a configurable daily budget (`BOUNCER_DAILY_BUDGET_USD`).
 - **Evaluation size:** results in the demo come from 10 designed reports, not a large benchmark.
 - **This build specifically:** the sandbox runs on local Docker rather than Nebius; the advisory publisher was not exercised against a real GitHub repository.
 
